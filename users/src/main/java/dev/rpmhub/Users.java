@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.faulttolerance.Retry;
 
 import io.smallrye.jwt.build.Jwt;
 import io.vertx.core.json.JsonObject;
@@ -43,6 +44,7 @@ public class Users {
      */
     @POST
     @Path("/getJwt")
+    @Retry(maxRetries = 3, delay = 2000)
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 
 import dev.rpmhub.client.CatalogRC;
 import dev.rpmhub.model.Book;
@@ -42,6 +43,7 @@ public class ManagementWS {
     @GET
     @Path("/listBooks")
     @Produces(MediaType.APPLICATION_JSON)
+    @CircuitBreaker(requestVolumeThreshold = 2)
     @RolesAllowed("User")
     public List<Book> listBooksAvailable() {
         LOGGER.info("ManagementWS listBooksAvailable executed");
